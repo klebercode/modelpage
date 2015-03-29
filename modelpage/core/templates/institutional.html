@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% load thumbnail %}
+
+{% block nav_city_hall %}active {% endblock %}
+
+{% block content %}
+
+    <!-- ******CONTENT****** -->
+    <div class="content container">
+        <div class="page-wrapper">
+            <header class="page-heading clearfix">
+                <h1 class="heading-title pull-left">A Prefeitura</h1>
+                <div class="breadcrumbs pull-right">
+                    <ul class="breadcrumbs-list">
+                        <li class="breadcrumbs-label">Você está aqui:</li>
+                        <li><a href="{% url 'home' %}">Início</a><i class="fa fa-angle-right"></i></li>
+                        <li class="current">A Prefeitura</li>
+                    </ul>
+                </div><!--//breadcrumbs-->
+            </header>
+            <div class="page-content">
+                <div class="row page-row">
+                    <article class="welcome col-md-8 col-sm-7">
+                        <h3 class="title">Prefeitura Municipal de Palmeirina</h3>
+                        <p>Conteúdo</p>
+                    </article><!--//page-content-->
+                    <aside class="page-sidebar  col-md-3 col-md-offset-1 col-sm-4 col-sm-offset-1">
+                        <section class="widget has-divider">
+                            <h3 class="title">Secretarias</h3>
+                            <ul class="job-list custom-list-style">
+                            {% for item in secretarias %}
+                                <li><i class="fa fa-caret-right"></i><a href="{{ item.get_absolute_url_secretaria }}">{{ item.name }}</a></li>
+                            {% endfor %}
+                            </ul>
+                        </section><!--//widget-->
+                        <section class="widget has-divider">
+                            <h3 class="title">Acontece</h3>
+                            <iframe class="iframe" src="//www.youtube.com/embed/Ks-_Mh1QhMc?rel=0&amp;wmode=transparent" frameborder="0" allowfullscreen=""></iframe>
+                        </section><!--//widget-->
+                        <section class="widget">
+                            <h3 class="title">Contato</h3>
+                            <p class="tel"><i class="fa fa-phone"></i>Fone: {{ enterprise.phone1 }}</p>
+                            <p class="email"><i class="fa fa-envelope"></i>Email: <a href="#">{{ enterprise.email }}</a></p>
+                        </section><!--//widget-->
+                    </aside>
+                </div><!--//page-row-->
+            </div><!--//page-content-->
+        </div><!--//page-->
+    </div><!--//content-->
+
+{% endblock content %}

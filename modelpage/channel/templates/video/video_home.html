@@ -1,0 +1,52 @@
+{% extends "video/video_base.html" %}
+
+{% load thumbnail %}
+{% load bootstrap_pagination %}
+
+{% block nav_channel %}active {% endblock nav_channel %}
+{% block nav_video %}active {% endblock nav_video %}
+
+{% block channel_title %}Vídeos{% endblock channel_title %}
+
+{% block channel_map %}
+    <li class="current">Vídeos</li>
+{% endblock channel_map %}
+
+{% block post %}
+
+    <div class="news-wrapper col-md-8 col-sm-7">
+        {% for object in object_list %}
+		<article class="news-item page-row has-divider clearfix">
+			<h3 class="title">
+				<a href="{{ object.get_absolute_url }}">{{ object.title }}</a><br>
+				<small>
+					marcações:
+					{% for tag in object.tags.all %}
+						<a href="{% url 'channel:video_tag_list' tag.slug %}"><span class="label label-theme">{{ tag.name }}</span></a>
+					{% endfor %}
+					| {{ object.created|date:"d F Y" }}
+				</small>
+			</h3>
+            <p class="featured-video">
+                {% autoescape off %}
+                {{ object.embed }}
+                {% endautoescape %}
+				<!-- <iframe width="100%" height="500" src="{{ object.embed }}" frameborder="0" allowfullscreen></iframe> -->
+            </p>
+            {% autoescape off %}
+            <p>{{ object.body|striptags|truncatewords_html:50 }}</p>
+            {% endautoescape %}
+            <a class="btn btn-theme read-more" href="{{ object.get_absolute_url }}">Ver mais<i class="fa fa-chevron-right"></i></a>
+        </article><!--//news-item-->
+        {% empty %}
+        <p>Nenhum vídeo encontrado.</p>
+        {% endfor %}
+
+        <!-- pagination -->
+        {% if is_paginated %}
+        {% bootstrap_paginate page_obj range=10 show_prev_next="true" show_first_last="true" previous_title="teste" previous_label="&lsaquo;" next_label="&rsaquo;" %}
+        {% endif %}
+
+    </div><!--//news-wrapper-->
+
+{% endblock post %}

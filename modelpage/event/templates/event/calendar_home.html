@@ -1,0 +1,53 @@
+{% extends "event/calendar_base.html" %}
+
+{% load thumbnail %}
+{% load bootstrap_pagination %}
+
+{% block nav_event %}active {% endblock %}
+
+{% block page_title %}Eventos{% endblock page_title %}
+
+{% block page_map %}
+    <li class="current">Eventos</li>
+{% endblock page_map %}
+
+{% block post %}
+
+    <div class="news-wrapper col-md-8 col-sm-7">
+
+        {% regroup object_list by date_start|date:"Y" as calendar_year_month %}
+
+        {% for year_month in calendar_year_month %}
+
+            <h3 class="title has-divider">{{ year_month.grouper }}</h3>
+
+            {% for object in year_month.list %}
+            <article class="events-item page-row has-divider clearfix">
+                <div class="date-label-wrapper col-md-1 col-sm-2">
+                    <p class="date-label">
+                        <span class="month">{{ object.date_start|date:"M" }}</span>
+                        <span class="date-number">{{ object.date_start|date:"d" }}</span>
+                    </p>
+                </div><!--//date-label-wrapper-->
+                <div class="details col-md-11 col-sm-10">
+                    <a href="{{ object.get_absolute_url }}"><h3 class="title">{{ object.title }}</h3></a>
+                    <p class="time"><i class="fa fa-clock-o"></i> {{ object.date_start|date:"H:i" }} - {{ object.date_end|date:"H:i" }}</p>
+                    {% autoescape off %}
+                    <p class="desc">{{ object.body|striptags|truncatewords_html:75 }}</p>
+                    {% endautoescape %}
+                </div><!--//details-->
+            </article><!--//events-item-->
+            {% endfor %}
+
+        {% empty %}
+        <p>Nenhum evento encontrado.</p>
+        {% endfor %}
+
+        <!-- pagination -->
+        {% if is_paginated %}
+        {% bootstrap_paginate page_obj range=10 show_prev_next="true" show_first_last="true" previous_label="&lsaquo;" next_label="&rsaquo;" %}
+        {% endif %}
+
+    </div><!--//news-wrapper-->
+
+{% endblock post %}

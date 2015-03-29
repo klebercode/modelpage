@@ -1,0 +1,42 @@
+{% extends "audio/audio_base.html" %}
+
+{% load thumbnail %}
+{% load bootstrap_pagination %}
+
+{% block nav_channel %}active {% endblock nav_channel %}
+{% block nav_audio %}active {% endblock nav_audio %}
+
+{% block channel_title %}Áudios{% endblock channel_title %}
+
+{% block channel_map %}
+    <li class="current">Áudios</li>
+{% endblock channel_map %}
+
+{% block post %}
+
+    <div class="news-wrapper col-md-8 col-sm-7">
+
+        {% for object in object_list %}
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="album-cover">
+                {% autoescape off %}
+                {{ object.embed }}
+                {% endautoescape %}
+                <div class="desc">
+                    <h4><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></h4>
+                    <p class="description">{{ object.body|striptags|truncatechars:170 }}</p>
+                </div>
+            </div>
+        </div><!--//audio-item-->
+        {% empty %}
+        <p>Nenhum áudio encontrado.</p>
+        {% endfor %}
+
+        <!-- pagination -->
+        {% if is_paginated %}
+        {% bootstrap_paginate page_obj range=10 show_prev_next="true" show_first_last="true" previous_title="teste" previous_label="&lsaquo;" next_label="&rsaquo;" %}
+        {% endif %}
+
+    </div><!--//audio-wrapper-->
+
+{% endblock post %}

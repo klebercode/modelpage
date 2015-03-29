@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% load thumbnail %}
+
+{% block nav_event %}active {% endblock %}
+
+{% block content %}
+
+    <!-- ******CONTENT****** -->
+    <div class="content container">
+        <div class="page-wrapper">
+            <header class="page-heading clearfix">
+                <h1 class="heading-title pull-left">{% block page_title %}{% endblock page_title %}</h1>
+                <div class="breadcrumbs pull-right">
+                    <ul class="breadcrumbs-list">
+                        <li class="breadcrumbs-label">Você está aqui:</li>
+                        <li><a href="{% url 'home' %}">Início</a><i class="fa fa-angle-right"></i></li>
+                        {% block page_map %}{% endblock page_map %}
+                    </ul>
+                </div><!--//breadcrumbs-->
+            </header>
+            <div class="page-content">
+                <div class="row page-row">
+
+                    {% block post %}
+
+                    {% endblock post %}
+
+                    <aside class="page-sidebar  col-md-3 col-md-offset-1 col-sm-4 col-sm-offset-1">
+                        <section class="widget">
+                            <h3 class="title">Últimas Notícias</h3>
+                            {% for object in blog_list %}
+                            <article class="news-item row">
+                                <figure class="thumb col-md-2 col-sm-3 col-xs-3">
+                                {% thumbnail object.image "40" crop="center" format="PNG" as im %}
+                                    <img src="{{ im.url }}" alt="{{ object.title }}" title="{{ object.title }}" />
+                                {% empty %}
+                                    <img src="http://placehold.it/40x40/cccccc/FFFFFF" alt="{{ object.title }}" title="{{ object.title }}" />
+                                {% endthumbnail %}
+                                </figure>
+                                <div class="details col-md-10 col-sm-9 col-xs-9">
+                                    <h4 class="title"><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></h4>
+                                </div>
+                            </article><!--//news-item-->
+                            {% empty %}
+                            <p>Nenhuma notícias encontrada.</p>
+                            {% endfor %}
+                        </section><!--//widget-->
+                    </aside>
+                </div><!--//page-row-->
+            </div><!--//page-content-->
+        </div><!--//page-->
+    </div><!--//content-->
+
+{% endblock content %}

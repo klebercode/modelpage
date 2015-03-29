@@ -1,0 +1,32 @@
+{% extends "video/video_base.html" %}
+
+{% load thumbnail %}
+
+{% block nav_channel %}active {% endblock nav_channel %}
+{% block nav_video %}active {% endblock nav_video %}
+
+{% block channel_title %}{{ object.title }}{% endblock channel_title %}
+
+{% block channel_map %}
+    <li><a href="{% url 'channel:video' %}">Vídeo</a><i class="fa fa-angle-right"></i></li>
+    <li class="current">{{ object.title }}</li>
+{% endblock channel_map %}
+
+{% block post %}
+
+    <div class="news-wrapper col-md-8 col-sm-7">
+        <article class="news-item">
+            <p class="meta text-muted">Data: {{ object.created|date:"d F Y" }}</p>
+            <p class="featured-video">
+                {% autoescape off %}
+                {{ object.embed }}
+                {% endautoescape %}
+				<!-- <iframe width="100%" height="500" src="{{ object.embed }}" frameborder="0" allowfullscreen></iframe> -->
+            </p>
+            {% autoescape off %}
+            <p>{{ object.body|linebreaks|cut:"../../../.." }}</p>
+            {% endautoescape %}
+        </article><!--//news-item-->
+    </div><!--//news-wrapper-->
+
+{% endblock post %}

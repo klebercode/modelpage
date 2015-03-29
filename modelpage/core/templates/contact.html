@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% load bootstrap3 %}
+
+{% block nav_contact %}active {% endblock nav_contact %}
+
+{% block content %}
+
+    <!-- ******CONTENT****** -->
+    <div class="content container">
+        <div class="page-wrapper">
+            <header class="page-heading clearfix">
+                <h1 class="heading-title pull-left">Contato</h1>
+                <div class="breadcrumbs pull-right">
+                    <ul class="breadcrumbs-list">
+                        <li class="breadcrumbs-label">Você está aqui:</li>
+                        <li><a href="index.html">Início</a><i class="fa fa-angle-right"></i></li>
+                        <li class="current">Contato</li>
+                    </ul>
+                </div><!--//breadcrumbs-->
+            </header>
+            <div class="page-content">
+                <div class="row">
+                    <article class="contact-form col-md-8 col-sm-7  page-row">
+                        <h3 class="title">Deixe sua mensagem</h3>
+                        {% if contact_success %}
+                            <p>Mensagem enviada com sucesso.</p>
+                            <a href="{% url 'contact' %}" class="btn btn-theme">Voltar</a>
+                        {% else %}
+                            <form method="post" action="">
+                                {% csrf_token %}
+                                {% bootstrap_form contact_form %}
+                                {% buttons %}
+                                    <button type="submit" class="btn btn-theme">Enviar mensagem</button>
+                                {% endbuttons %}
+                            </form>
+                        {% endif %}
+                    </article><!--//contact-form-->
+                    <aside class="page-sidebar  col-md-3 col-md-offset-1 col-sm-4 col-sm-offset-1">
+                        <section class="widget has-divider">
+                            <h3 class="title">Endereço</h3>
+                            <p class="adr">
+                                <span class="adr-group">
+                                    <span class="street-address">{{ enterprise.address }}, {{ enterprise.number }}</span><br>
+                                    <span class="region">{{ enterprise.district }} / {{ enterprise.state }}</span><br>
+                                    <span class="postal-code">{{ enterprise.cep }}</span><br>
+                                    <span class="country-name">{{ enterprise.country }}</span>
+                                </span>
+                            </p>
+                        </section><!--//widget-->
+
+                        <section class="widget">
+                            <h3 class="title">Contato</h3>
+                            <p class="tel"><i class="fa fa-phone"></i>Fone: {{ enterprise.phone1 }}</p>
+                            <p class="email"><i class="fa fa-envelope"></i>Email: <a href="#">{{ enterprise.email }}</a></p>
+                        </section><!--//widget-->
+                    </aside><!--//page-sidebar-->
+                </div><!--//page-row-->
+                <div class="page-row">
+                    <article class="map-section">
+                        <h3 class="title">Onde nos encontrar</h3>
+                        <div id="map"></div><!--//map-->
+                    </article><!--//map-->
+                </div><!--//page-row-->
+            </div><!--//page-content-->
+        </div><!--//page-wrapper-->
+    </div><!--//content-->
+
+{% endblock content %}
+
+{% block extra_js_bot %}
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}plugins/gmaps/gmaps.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/main.js"></script>
+
+<!-- <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script> -->
+<script type="text/javascript">
+    var map;
+    jQuery(document).ready(function(){
+
+        map = new GMaps({
+            div: '#map',
+            lat: 51.451573,
+            lng: -2.595008,
+        });
+        map.addMarker({
+            lat: 51.451573,
+            lng: -2.595008,
+            title: 'Endereço',
+            infoWindow: {
+                content: '<h5 class="title">{{ enterprise.name }}</h5><p><span class="region">{{ enterprise.address }}, {{ enterprise.number }}</span><br><span class="postal-code">{{ enterprise.district }}, {{ enterprise.cep }}</span><br><span class="country-name">{{ enterprise.city }}-{{ enterprise.state }}</span></p>'
+            }
+
+        });
+
+    });
+</script>
+
+{% endblock extra_js_bot %}

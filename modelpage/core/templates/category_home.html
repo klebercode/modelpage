@@ -1,0 +1,22 @@
+{% regroup category_list by area.name as area_list %}
+
+{% for area in area_list %}
+	{% if area.list.0.area.home %}
+		<h3 class="title">{{ area.grouper }}</h3>
+		{% if tagopen == '<p>' %}
+			<div class="section-content">
+		{% else %}
+			<ul class="job-list custom-list-style">
+		{% endif %}
+		{% for item in area.list %}
+			{{ tagopen }}<a href="{% url a item.slug %}"><i class="fa fa-caret-right"></i>{{ item.name }}</a>{{ tagclose }}
+		{% endfor %}
+		{% if tagopen == 'p' %}
+			</div>
+		{% else %}
+			</ul>
+		{% endif %}
+		{{ blockclose }}
+	{% endif %}
+{% endfor %}
+

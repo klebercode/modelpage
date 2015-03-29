@@ -1,0 +1,17 @@
+<h3 class="title">Categorias</h3>
+
+{% for item in category_list %}
+	{% if tagopen == '<p>' %}
+		<div class="section-content">
+	{% else %}
+		<ul class="job-list custom-list-style">
+	{% endif %}
+		{{ tagopen }}<a href="{% url a item.slug %}"><i class="fa fa-caret-right"></i>{{ item.name }}</a>{{ tagclose }}
+	{% if tagopen == 'p' %}
+		</div>
+	{% else %}
+		</ul>
+	{% endif %}
+	{{ blockclose }}
+{% endfor %}
+

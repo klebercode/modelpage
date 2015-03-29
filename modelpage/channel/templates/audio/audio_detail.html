@@ -1,0 +1,27 @@
+{% extends "audio/audio_base.html" %}
+
+{% load thumbnail %}
+
+{% block nav_channel %}active {% endblock nav_channel %}
+{% block nav_audio %}active {% endblock nav_audio %}
+
+{% block channel_title %}{{ object.title }}{% endblock channel_title %}
+
+{% block channel_map %}
+    <li><a href="{% url 'channel:audio' %}">Áudio</a><i class="fa fa-angle-right"></i></li>
+    <li class="current">{{ object.title }}</li>
+{% endblock channel_map %}
+
+{% block post %}
+
+    <div class="news-wrapper col-md-8 col-sm-7">
+        <article class="news-item">
+            <p class="meta text-muted">Data: {{ object.created|date:"d F Y" }}</p>
+            {% autoescape off %}
+            {{ object.embed }}
+            <p>{{ object.body|linebreaks|cut:"../../../.." }}</p>
+            {% endautoescape %}
+        </article><!--//news-item-->
+    </div><!--//news-wrapper-->
+
+{% endblock post %}

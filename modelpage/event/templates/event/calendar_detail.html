@@ -1,0 +1,28 @@
+{% extends "event/calendar_base.html" %}
+
+{% load thumbnail %}
+
+{% block nav_event %}active {% endblock %}
+
+{% block page_title %}{{ object.title }}{% endblock page_title %}
+
+{% block page_map %}
+    <li><a href="{% url 'event:home' %}">Eventos</a><i class="fa fa-angle-right"></i></li>
+    <li class="current">{{ object.title }}</li>
+{% endblock page_map %}
+
+{% block post %}
+
+    <div class="news-wrapper col-md-8 col-sm-7">
+        <article class="news-item">
+            <p class="meta text-muted">
+                Começa em {{ object.date_start|date:"d F Y" }} -
+                Termina em {{ object.date_end|date:"d F Y" }}
+            </p>
+            {% autoescape off %}
+            <p>{{ object.body|linebreaks|cut:"../../../.." }}</p>
+            {% endautoescape %}
+        </article><!--//news-item-->
+    </div><!--//news-wrapper-->
+
+{% endblock post %}

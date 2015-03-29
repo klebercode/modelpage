@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+{% load thumbnail %}
+
+{% block home_page %} class="home-page"{% endblock %}
+{% block nav_home %}active {% endblock %}
+
+{% block content %}
+
+    <!-- ******CONTENT****** -->
+    <div class="content container">
+        <div id="promo-slider" class="slider flexslider">
+            <ul class="slides">
+                {% for ban in super_banner_list %}
+                <li>
+                    <a href="{% if ban.link %}{{ ban.link }}{% else %}#{% endif %}">
+                    {% thumbnail ban.image "1140x350" crop="center" format="PNG" as im %}
+                        <img src="{{ im.url }}" alt="{{ ban.title }}" title="{{ ban.title }}">
+                    {% empty %}
+                        <img src="http://placehold.it/940x250/cccccc/FFFFFF" alt="{{ ban.title }}">
+                    {% endthumbnail %}
+                    </a>
+                    <p class="flex-caption">
+                        <!-- <span class="main" >{{ ban.title }}</span>
+                        <br /> -->
+                        <span class="secondary clearfix" >{{ ban.title }}</span>
+                    </p>
+                </li>
+                {% endfor %}
+            </ul><!--//slides-->
+        </div><!--//flexslider-->
+        <section class="promo box box-light">
+            <div class="col-md-9">
+                <!-- <h1 class="section-heading">Portal da Transparência</h1> -->
+                <div class="col-md-5">
+                    <a href="{% url 'transparency' %}" target="_blank">
+                        <img src="{{ STATIC_URL }}images/logo_portal.png" class="img-responsive">
+                    </a>
+                </div>
+                <div class="col-md-7">
+                    <p>Confira todos os dados da gestão fiscal do município, em tempo real.</p>
+                    <p>Em cumprimento a Lei Complementar 131, de 27 de maio de 2009.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <a class="btn btn-cta" href="{% url 'transparency' %}" target="_blank">
+                    <i class="fa fa-play-circle"></i>Acessar
+                </a>
+            </div>
+        </section><!--//promo-->
+        <section class="news">
+            <h1 class="section-heading text-highlight"><span class="line">Últimas Notícias</span></h1>
+            <div class="carousel-controls">
+                <a class="prev" href="#news-carousel" data-slide="prev"><i class="fa fa-caret-left"></i></a>
+                <a class="next" href="#news-carousel" data-slide="next"><i class="fa fa-caret-right"></i></a>
+            </div><!--//carousel-controls-->
+            <div class="section-content clearfix">
+                <div id="news-carousel" class="news-carousel carousel slide">
+                    <div class="carousel-inner">
+                    {% for blog in blog_list %}
+                        {% if forloop.counter == 1 %}
+                        <div class="item active">
+                        {% endif %}
+                            <div class="col-md-4 news-item">
+                                <h2 class="title"><a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a></h2>
+                                {% thumbnail blog.image "100" crop="center" format="PNG" as im %}
+                                    <img class="thumb" src="{{ im.url }}" alt="{{ blog.title }}">
+                                {% empty %}
+                                    <img class="thumb" src="http://placehold.it/216x144/cccccc/FFFFFF" alt="{{ blog.title }}">
+                                {% endthumbnail %}
+                                {% autoescape off %}
+									<p>{{ blog.body|striptags|truncatechars:100 }}</p>
+                                {% endautoescape %}
+                                <a class="read-more" href="{{ blog.get_absolute_url }}">Leia mais<i class="fa fa-chevron-right"></i></a>
+                            </div><!--//news-item-->
+                        {% if forloop.counter == 3 %}
+                        </div><!--//item-->
+                        <div class="item">
+                        {% endif %}
+                        {% if forloop.counter == 6 %}
+                        </div><!--//item-->
+                        {% endif %}
+                    {% endfor %}
+                    </div><!--//carousel-inner-->
+                </div><!--//news-carousel-->
+            </div><!--//section-content-->
+        </section><!--//news-->
+        <div class="row cols-wrapper">
+            <div class="col-md-3">
+                <section class="events">
+                    <h1 class="section-heading text-highlight"><span class="line">Eventos</span></h1>
+                    <div class="section-content">
+                        {% for cal in calendar_list %}
+                        <div class="event-item">
+                            <p class="date-label">
+                                <span class="month">{{ cal.date_start|date:"M" }}</span>
+                                <span class="date-number">{{ cal.date_start|date:"d" }}</span>
+                            </p>
+                            <div class="details">
+                                <a href="{{ cal.get_absolute_url }}"><h2 class="title">{{ cal.title }}</h2></a>
+                                <p class="time"><i class="fa fa-clock-o"></i>{{ cal.date_start|date:"H:i" }} - {{ cal.date_end|date:"H:i" }}</p>
+                                <!-- <p class="location"><i class="fa fa-map-marker"></i>East Campus</p> -->
+                            </div><!--//details-->
+                        </div><!--event-item-->
+                        {% empty %}
+                        <p>Nenhum evento encontrado.</p>
+                        {% endfor %}
+                        <a class="read-more" href="{% url 'event:home' %}">Todos os Eventos<i class="fa fa-chevron-right"></i></a>
+                    </div><!--//section-content-->
+                </section><!--//events-->
+            </div><!--//col-md-3-->
+            <div class="col-md-6">
+                <section class="video">
+                    <h1 class="section-heading text-highlight"><span class="line">Acontece</span></h1>
+                    <div class="carousel-controls">
+                        <a class="prev" href="#videos-carousel" data-slide="prev"><i class="fa fa-caret-left"></i></a>
+                        <a class="next" href="#videos-carousel" data-slide="next"><i class="fa fa-caret-right"></i></a>
+                    </div><!--//carousel-controls-->
+                    <div class="section-content">
+                        <div id="videos-carousel" class="videos-carousel carousel slide">
+                            <div class="carousel-inner">
+								{% for object in video_list %}
+								<div class="item{% if forloop.first %} active{% endif %}">
+                                    {% autoescape off %}
+                                    {{ object.embed }}
+									<p class="description">{{ object.body|striptags|truncatechars:170 }}</p>
+									{% endautoescape %}
+                                </div><!--//item-->
+								{% endfor %}
+                            </div><!--//carousel-inner-->
+                        </div><!--//videos-carousel-->
+                    </div><!--//section-content-->
+                </section><!--//video-->
+            </div>
+            <div class="col-md-3">
+				<section class="links">
+				{% regroup bot_list by area.name as area_list %}
+
+				{% for area in area_list %}
+					{% if area.list.0.area.home %}
+						<h1 class="section-heading text-highlight"><span class="line">{{ area.grouper }}</span></h1>
+						<div class="section-content">
+						{% for item in area.list %}
+							<p><a href="{% url 'content' item.slug %}"><i class="fa fa-caret-right"></i>{{ item.name }}</a></p>
+						{% endfor %}
+						</div>
+					{% endif %}
+				{% endfor %}
+                </section><!--//links-->
+            </div><!--//col-md-3-->
+        </div><!--//cols-wrapper-->
+        <section class="awards">
+            <div id="awards-carousel" class="awards-carousel carousel slide">
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <ul class="logos">
+                            {% for program in program_list %}
+                                <li class="col-md-2 col-sm-2 col-xs-4">
+                                    <a href="{{ program.link }}" target="_blank">
+                                        <img class="img-responsive" src="{{ program.image.url }}" alt="{{ program.name }}" title="{{ program.name }}" />
+                                    </a>
+                                </li>
+                            {% empty %}
+                                <li class="col-md-12">
+                                    Aguardando conteúdo...
+                                </li>
+                            {% endfor %}
+                        </ul><!--//slides-->
+                    </div><!--//item-->
+
+                    <div class="item">
+                        <ul class="logos">
+                            <li class="col-md-2 col-sm-2 col-xs-4">
+                                <img class="img-responsive" src="assets/images/awards/award7.jpg"  alt="" />
+                            </li>
+                            <li class="col-md-2 col-sm-2 col-xs-4">
+                                <img class="img-responsive" src="assets/images/awards/award6.jpg"  alt="" />
+                            </li>
+                            <li class="col-md-2 col-sm-2 col-xs-4">
+                                <img class="img-responsive" src="assets/images/awards/award5.jpg"  alt="" />
+                            </li>
+                            <li class="col-md-2 col-sm-2 col-xs-4">
+                                <img class="img-responsive" src="assets/images/awards/award4.jpg"  alt="" />
+                            </li>
+                            <li class="col-md-2 col-sm-2 col-xs-4">
+                                <img class="img-responsive" src="assets/images/awards/award3.jpg"  alt="" />
+                            </li>
+                            <li class="col-md-2 col-sm-2 col-xs-4">
+                                <img class="img-responsive" src="assets/images/awards/award2.jpg"  alt="" />
+                            </li>
+                        </ul><!--//slides-->
+                    </div><!--//item-->
+                </div><!--//carousel-inner-->
+                <a class="left carousel-control" href="#awards-carousel" data-slide="prev">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                <a class="right carousel-control" href="#awards-carousel" data-slide="next">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+
+            </div>
+        </section>
+    </div><!--//content-->
+
+    <!-- start:popup_banner -->
+    {% if popup_banner_list %}
+        <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body">
+                {% for ban in popup_banner_list %}
+                    <a href="{{ ban.link }}" target="_blank">
+                    {% thumbnail ban.image "800" crop="center" format="PNG" as im %}
+                        <img src="{{ im.url }}" alt="{{ ban.title }}" title="{{ ban.title }}" class="img-responsive">
+                    {% empty %}
+                        <img src="http://placehold.it/800x600/cccccc/FFFFFF" alt="{{ ban.title }}" title="{{ ban.title }}" class="img-responsive">
+                    {% endthumbnail %}
+                    </a>
+                {% endfor %}
+              </div>
+              <div class="modal-footer">
+                <a class="btn btn-red" data-dismiss="modal">Fechar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+    {% endif %}
+    <!-- end:popup_banner -->
+
+{% endblock content %}
+
+{% block extra_js_bot %}
+
+    <script type="text/javascript">
+        $(window).load(function(){
+            $('#myModal').modal('show');
+        });
+    </script>
+
+{% endblock extra_js_bot %}
