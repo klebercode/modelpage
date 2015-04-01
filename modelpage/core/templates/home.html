@@ -34,7 +34,11 @@
                 <!-- <h1 class="section-heading">Portal da Transparência</h1> -->
                 <div class="col-md-5">
                     <a href="{% url 'transparency' %}" target="_blank">
-                        <img src="{{ STATIC_URL }}images/logo_portal.png" class="img-responsive">
+                        {% thumbnail enterprise.logo_trans "272x101" crop="center" format="PNG" as im %}
+                            <img class="img-responsive" src="{{ im.url }}">
+                        {% empty %}
+                            <img class="img-responsive" src="http://placehold.it/272x101/cccccc/FFFFFF">
+                        {% endthumbnail %}
                     </a>
                 </div>
                 <div class="col-md-7">
@@ -185,33 +189,35 @@
                 </section><!--//links-->
             </div><!--//col-md-3-->
         </div><!--//cols-wrapper-->
-        <section class="awards">
-            <div id="awards-carousel" class="awards-carousel carousel slide">
-                <div class="carousel-inner">
-                    <div class="item active">
-                        <ul class="logos">
-                            {% for program in program_list %}
-                                <li class="col-md-2 col-sm-2 col-xs-4">
-                                    <a href="{{ program.link }}" target="_blank">
-                                        <img class="img-responsive" src="{{ program.image.url }}" alt="{{ program.name }}" title="{{ program.name }}" />
-                                    </a>
-                                </li>
-                            {% empty %}
-                                <li class="col-md-12">
-                                    Aguardando conteúdo...
-                                </li>
-                            {% endfor %}
-                        </ul><!--//slides-->
-                    </div><!--//item-->
-                </div><!--//carousel-inner-->
-                <a class="left carousel-control" href="#awards-carousel" data-slide="prev">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                <a class="right carousel-control" href="#awards-carousel" data-slide="next">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-            </div>
-        </section><!-- //awards -->
+        <div class="c-wrapper">
+            <section class="awards">
+                <div id="awards-carousel" class="awards-carousel carousel slide">
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <ul class="logos">
+                                {% for program in program_list %}
+                                    <li class="col-md-2 col-sm-2 col-xs-4">
+                                        <a href="{{ program.link }}" target="_blank">
+                                            <img class="img-responsive" src="{{ program.image.url }}" alt="{{ program.name }}" title="{{ program.name }}" />
+                                        </a>
+                                    </li>
+                                {% empty %}
+                                    <li class="col-md-12">
+                                        Aguardando conteúdo...
+                                    </li>
+                                {% endfor %}
+                            </ul><!--//slides-->
+                        </div><!--//item-->
+                    </div><!--//carousel-inner-->
+                    <a class="left carousel-control" href="#awards-carousel" data-slide="prev">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a class="right carousel-control" href="#awards-carousel" data-slide="next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </div>
+            </section><!-- //awards -->
+        </div>
     </div><!--//content-->
 
     <!-- start:popup_banner -->

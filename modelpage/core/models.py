@@ -122,6 +122,9 @@ class Social(models.Model):
 
 
 class Enterprise(models.Model):
+    logo = FileBrowseField(_(u'Logo site'), max_length=200,
+                           directory="enterprise/",
+                           extensions=[".jpg", ".png"])
     name = models.CharField(_(u'Nome'), max_length=100)
     description = models.CharField(_(u'Descrição'), max_length=100,
                                    blank=True, null=True)
@@ -149,6 +152,9 @@ class Enterprise(models.Model):
     site = models.URLField(_(u'Site'))
     socials = models.ManyToManyField('Social',
                                      verbose_name=_(u'Mídias Sociais'))
+    logo_trans = FileBrowseField(_(u'Logo portal da transparência'),
+                                 max_length=200, directory="enterprise/",
+                                 extensions=[".jpg", ".png"])
 
     def __unicode__(self):
         return unicode(self.name)
@@ -169,7 +175,7 @@ class Category(models.Model):
                                 help_text='Caso o valor seja zero o menu \
                                 ficará em ordem alfabética.')
     menu = models.BooleanField(_(u'Visível no menu principal?'), default=False)
-    menu_extra = models.BooleanField(_(u'Visível no menu secundário?'), 
+    menu_extra = models.BooleanField(_(u'Visível no menu secundário?'),
                                      default=False)
     home = models.BooleanField(_(u'Visível na home?'), default=False)
 
@@ -179,7 +185,7 @@ class Category(models.Model):
     def save(self, *args, **kwargs):
         a = Area.visibles.get(name=self.area)
         self.home = a.home
-        
+
         super(Category, self).save(*args, **kwargs)
 
         c = Content.objects.filter(category=self.pk)
@@ -187,7 +193,7 @@ class Category(models.Model):
             Content.objects.get_or_create(
                 category_id=self.pk, body='Aguardando conteúdo...')
 
- 
+
     def __unicode__(self):
         return unicode(self.name)
 
