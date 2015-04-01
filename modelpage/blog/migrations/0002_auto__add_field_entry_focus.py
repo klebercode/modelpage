@@ -8,36 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Entry'
-        db.create_table(u'blog_entry', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('created', self.gf('django.db.models.fields.DateTimeField')()),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=200)),
-            ('image', self.gf('filebrowser.fields.FileBrowseField')(max_length=200)),
-            ('body', self.gf('tinymce.models.HTMLField')()),
-            ('publish', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-            ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-        ))
-        db.send_create_signal(u'blog', ['Entry'])
-
-        # Adding M2M table for field categories on 'Entry'
-        m2m_table_name = db.shorten_name(u'blog_entry_categories')
-        db.create_table(m2m_table_name, (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('entry', models.ForeignKey(orm[u'blog.entry'], null=False)),
-            ('category', models.ForeignKey(orm[u'core.category'], null=False))
-        ))
-        db.create_unique(m2m_table_name, ['entry_id', 'category_id'])
+        # Adding field 'Entry.focus'
+        db.add_column(u'blog_entry', 'focus',
+                      self.gf('django.db.models.fields.BooleanField')(default=False),
+                      keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting model 'Entry'
-        db.delete_table(u'blog_entry')
-
-        # Removing M2M table for field categories on 'Entry'
-        db.delete_table(db.shorten_name(u'blog_entry_categories'))
+        # Deleting field 'Entry.focus'
+        db.delete_column(u'blog_entry', 'focus')
 
 
     models = {
@@ -76,6 +55,7 @@ class Migration(SchemaMigration):
             'body': ('tinymce.models.HTMLField', [], {}),
             'categories': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['core.Category']", 'symmetrical': 'False'}),
             'created': ('django.db.models.fields.DateTimeField', [], {}),
+            'focus': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'image': ('filebrowser.fields.FileBrowseField', [], {'max_length': '200'}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),

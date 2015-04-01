@@ -13,22 +13,21 @@ from modelpage.core.models import Category
 
 
 class EntryManager(models.Manager):
-    '''
-    Esse manager carrega todos os objetos do model Entry sem filtros
-    '''
     def get_queryset(self):
         return super(EntryManager,
                      self).get_queryset().all()
 
 
 class PublishedManager(models.Manager):
-    '''
-    Esse manager carrega todos os objetos do model Entry que estao marcados
-    como publish=True
-    '''
     def get_queryset(self):
         return super(PublishedManager,
-                     self).get_queryset().filter(publish=True)
+                     self).get_queryset().filter(publish=True, focus=False)
+
+
+class FocusedManager(models.Manager):
+    def get_queryset(self):
+        return super(FocusedManager,
+                     self).get_queryset().filter(publish=True, focus=True)
 
 
 class Entry(models.Model):
@@ -40,6 +39,7 @@ class Entry(models.Model):
                             directory="blog/", extensions=[".jpg", ".png"])
     body = tinymce_models.HTMLField(_(u'Texto'))
     publish = models.BooleanField(_(u'Publicar no site?'), default=True)
+    focus = models.BooleanField(_(u'Em destaque no início?'), default=False)
     modified = models.DateTimeField(_(u'Data de Modificação'), auto_now=True)
     author = models.ForeignKey(User, verbose_name=_(u'Autor'),
                                editable=False, default=get_current_user)
@@ -47,12 +47,9 @@ class Entry(models.Model):
                                         verbose_name=_(u'Categorias'))
 
     tags = TaggableManager()
-    # quando precisar chamar todos os objetos sem filtro:
-    # Entry.objects.all()
     objects = EntryManager()
-    # quando precisar chamar apenas os objetos com publish=True:
-    # Entry.published.all()
     published = PublishedManager()
+    focused = FocusedManager()
 
     def admin_image(self):
         return '<img src="%s" width="200" />' % self.image.url

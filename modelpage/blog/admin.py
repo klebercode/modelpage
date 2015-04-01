@@ -6,8 +6,8 @@ from modelpage.blog.models import Entry
 
 class EntryAdmin(admin.ModelAdmin):
     list_filter = ('created', 'author__username', 'tags',
-                   'categories')
-    list_display = ('title', 'created', 'author', 'publish')
+                   'categories', 'publish', 'focus')
+    list_display = ('title', 'created', 'author', 'publish', 'focus')
     search_fields = ('title', 'created', 'author', 'body')
     date_hierarchy = 'created'
     prepopulated_fields = {'slug': ('title',)}

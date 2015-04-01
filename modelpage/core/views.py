@@ -21,6 +21,7 @@ def home(request):
     context['program_list'] = Program.objects.all()
     context['calendar_list'] = Calendar.objects.all()[:4]
     context['blog_list'] = Entry.published.all()[:6]
+    context['blog_focused_list'] = Entry.focused.all()[:3]
     context['super_banner_list'] = Banner.published.filter(type=1)
     context['second_banner_list'] = Banner.published.filter(type=2)
     context['popup_banner_list'] = Banner.published.filter(type=3)[:1]
