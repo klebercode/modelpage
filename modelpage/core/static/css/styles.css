@@ -201,19 +201,6 @@ blockquote p {
   -moz-opacity: 1;
   opacity: 1;
 }
-.carousel-inner { text-align: center; }
-
-.carousel .item > img { display: inline-block; }
-
-/* .carousel-inner > .item > img,
-.carousel-inner > .item > a > img{
-  width: 100%; use this, or not
-  margin: auto;
-}
-div.c-wrapper{
-    width: 80%; for example
-    margin: auto;
-} */
 #topcontrol {
   background: #b54747;
   color: #fff;
