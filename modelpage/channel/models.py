@@ -4,7 +4,6 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 
-from filebrowser.fields import FileBrowseField
 from tinymce import models as tinymce_models
 from taggit_autosuggest.managers import TaggableManager
 
@@ -24,7 +23,8 @@ class Video(models.Model):
     author = models.ForeignKey(User, verbose_name=_(u'Autor'),
                                editable=False, default=get_current_user)
     categories = models.ManyToManyField(Category,
-                                        verbose_name=_(u'Categorias'))
+                                        verbose_name=_(u'Categorias'),
+                                        blank=True, null=True)
 
     tags = TaggableManager()
 
@@ -66,7 +66,8 @@ class Audio(models.Model):
     author = models.ForeignKey(User, verbose_name=_(u'Autor'),
                                editable=False, default=get_current_user)
     categories = models.ManyToManyField(Category,
-                                        verbose_name=_(u'Categorias'))
+                                        verbose_name=_(u'Categorias'),
+                                        blank=True, null=True)
 
     tags = TaggableManager()
 
