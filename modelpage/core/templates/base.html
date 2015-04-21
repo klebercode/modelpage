@@ -96,9 +96,26 @@
                 <div class="navbar-collapse collapse" id="navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li class="{% block nav_home %}{% endblock %}nav-item"><a href="{% url 'home' %}">Início</a></li>
-                        {% for item in menu_list %}
-                            <li class="{% block nav_city_hall %}{% endblock %}nav-item"><a href="{% url 'content' item.slug %}">{{ item.name }}</a></li>
+
+                        {% regroup menu_list by area.name as menu_area_list %}
+
+                        {% for area in menu_area_list %}
+                            {% if area.list.0.area.menu %}
+                                <li class="nav-item dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false" href="#">{{ area.grouper }} <i class="fa fa-angle-down"></i></a>
+                                    <ul class="dropdown-menu">
+                                    {% for item in area.list %}
+                                        <li><a href="{% url 'content' item.slug %}">{{ item.name }}</a></li>
+                                    {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endif %}
                         {% endfor %}
+
+                        <!-- {% for item in menu_list %}
+                            <li class="{% block nav_city_hall %}{% endblock %}nav-item"><a href="{% url 'content' item.slug %}">{{ item.area }} - {{ item.name }}</a></li>
+                        {% endfor %} -->
+
                         <li class="{% block nav_event %}{% endblock %}nav-item"><a href="{% url 'event:home' %}">Eventos</a></li>
                         <li class="{% block nav_blog %}{% endblock %}nav-item"><a href="{% url 'blog:home' %}">Notícias</a></li>
                         <!-- <li class="{% block nav_channel %}{% endblock %}nav-item dropdown">

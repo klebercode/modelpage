@@ -90,6 +90,7 @@ class Area(models.Model):
                             unique=True)
     visible = models.BooleanField(_(u'Visível no site?'), default=True)
     home = models.BooleanField(_(u'Visível na home?'), default=False)
+    menu = models.BooleanField(_(u'Visível no menu principal?'), default=False)
     order = models.IntegerField(_(u'Ordem no menu'), default=0,
                                 help_text='Caso o valor seja zero o menu \
                                 ficará em ordem alfabética.')
@@ -192,7 +193,6 @@ class Category(models.Model):
         if not c:
             Content.objects.get_or_create(
                 category_id=self.pk, body='Aguardando conteúdo...')
-
 
     def __unicode__(self):
         return unicode(self.name)

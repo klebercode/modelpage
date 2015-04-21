@@ -14,8 +14,8 @@ class EnterpriseAdmin(admin.ModelAdmin):
 
 
 class AreaAdmin(admin.ModelAdmin):
-    list_filter = ('visible', 'home')
-    list_display = ('name', 'slug', 'visible', 'home', 'order')
+    list_filter = ('visible', 'home', 'menu')
+    list_display = ('name', 'slug', 'visible', 'home', 'menu', 'order')
     search_fields = ('name', 'slug')
     prepopulated_fields = {'slug': ('name',)}
 

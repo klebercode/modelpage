@@ -2,7 +2,7 @@
 
 {% load thumbnail %}
 
-{% block nav_city_hall %}active {% endblock %}
+{% block nav_content %}active {% endblock %}
 
 {% block content %}
 
@@ -15,6 +15,7 @@
                     <ul class="breadcrumbs-list">
                         <li class="breadcrumbs-label">Você está aqui:</li>
                         <li><a href="{% url 'home' %}">Início</a><i class="fa fa-angle-right"></i></li>
+                        <li><a href="{% url 'home' %}">{{ content_list.category.area }}</a><i class="fa fa-angle-right"></i></li>
                         <li class="current">{{ content_list.category }}</li>
                     </ul>
                 </div><!--//breadcrumbs-->
@@ -26,7 +27,7 @@
                         <p>{{ content_list.body|linebreaks|cut:"../../../.." }}</p>
                         {% endautoescape %}
                     </article><!--//page-content-->
-                    <aside class="page-sidebar  col-md-3 col-md-offset-1 col-sm-4 col-sm-offset-1">
+                    <aside class="page-sidebar col-md-3 col-md-offset-1 col-sm-4 col-sm-offset-1">
                         <section class="widget has-divider">
 							{% include "category.html" with a='content' tagopen='<li>' tagclose='</li>' %}
 						</section><!--//widget-->
