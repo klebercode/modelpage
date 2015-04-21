@@ -189,6 +189,8 @@
                 </section><!--//links-->
             </div><!--//col-md-3-->
         </div><!--//cols-wrapper-->
+
+        {% if program_list %}
         <div class="c-wrapper">
             <section class="awards">
                 <div id="awards-carousel" class="awards-carousel carousel slide">
@@ -200,10 +202,6 @@
                                         <a href="{{ program.link }}" target="_blank">
                                             <img class="img-responsive" src="{{ program.image.url }}" alt="{{ program.name }}" title="{{ program.name }}" />
                                         </a>
-                                    </li>
-                                {% empty %}
-                                    <li class="col-md-12">
-                                        Aguardando conteúdo...
                                     </li>
                                 {% endfor %}
                             </ul><!--//slides-->
@@ -218,6 +216,8 @@
                 </div>
             </section><!-- //awards -->
         </div>
+        {% endif %}
+
     </div><!--//content-->
 
     <!-- start:popup_banner -->
