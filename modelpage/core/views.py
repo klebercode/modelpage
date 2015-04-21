@@ -1,16 +1,14 @@
 # coding: utf-8
 from django.shortcuts import render, get_object_or_404
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.db.models import Q
 from django.template import RequestContext
 
 from modelpage.context_processors import enterprise_proc
 
 from modelpage.core.models import (Link, Program, Banner, Category, Content,
-                               Timeline)
+                                   Timeline)
 from modelpage.event.models import Calendar
 from modelpage.blog.models import Entry
-from modelpage.channel.models import Video, Audio
+from modelpage.channel.models import Video
 
 from modelpage.core.forms import ContactForm
 
@@ -92,5 +90,8 @@ def transparency(request):
     if pagina:
         context['pagina'] = pagina
 
-    return render(request, 'transparencia.html', context)
+    return render(request, 'transparencia.html', context,
+                  context_instance=RequestContext(request,
+                                                  processors=[enterprise_proc]
+                                                  ))
     # return redirect('http://palmeirina.pe.gov.br/transparencia/')

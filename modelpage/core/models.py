@@ -156,6 +156,7 @@ class Enterprise(models.Model):
     logo_trans = FileBrowseField(_(u'Logo portal da transparência'),
                                  max_length=200, directory="enterprise/",
                                  extensions=[".jpg", ".png"])
+    url_trans = models.URLField(_(u'Site do Portal da Transparência'))
 
     def __unicode__(self):
         return unicode(self.name)
@@ -170,6 +171,7 @@ class Category(models.Model):
     name = models.CharField(_(u'Nome da Categoria'), max_length=200)
     slug = models.SlugField(_(u'Link no Site'), max_length=200,
                             unique=True)
+    alt = models.URLField(_(u'Link Alternativo'), blank=True, null=True)
     acronym = models.CharField(_(u'Sigla'), max_length=50, blank=True,
                                null=True)
     order = models.IntegerField(_(u'Ordem do Menu'), default=0,

@@ -100,7 +100,7 @@
                         {% regroup menu_list by area.name as menu_area_list %}
 
                         {% for area in menu_area_list %}
-                            {% if area.list.0.area.menu %}
+                            {% if area.list.0.area.menu and not area.list.0.area.slug == 'transparencia'%}
                                 <li class="nav-item dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false" href="#">{{ area.grouper }} <i class="fa fa-angle-down"></i></a>
                                     <ul class="dropdown-menu">
@@ -151,16 +151,18 @@
                             {% if forloop.first %}
                                 <div class="row">
                             {% endif %}
-                            <div class="footer-col col-md-6 col-sm-6 about">
-                                <div class="footer-col-inner">
-                                    <h3>{{ area.grouper }}</h3>
-                                    <ul>
-                                    {% for item in area.list %}
-                                        <li><a href="{% url 'content' item.slug %}">{{ item.name }}</a></li>
-                                    {% endfor %}
-                                    </ul>
-                                </div><!--//footer-col-inner-->
-                            </div><!--//foooter-col-->
+                            {% if not area.list.0.area.slug == 'transparencia' %}
+                                <div class="footer-col col-md-6 col-sm-6 about">
+                                    <div class="footer-col-inner">
+                                        <h3>{{ area.grouper }}</h3>
+                                        <ul>
+                                        {% for item in area.list %}
+                                            <li><a href="{% url 'content' item.slug %}"><i class="fa fa-caret-right"></i>{{ item.name }}</a></li>
+                                        {% endfor %}
+                                        </ul>
+                                    </div><!--//footer-col-inner-->
+                                </div><!--//foooter-col-->
+                            {% endif %}
                             {% if forloop.counter|divisibleby:2 and not forloop.last %}
                                 </div>
                                 <div class="row">
@@ -171,25 +173,24 @@
                     </div>
                     <div class="footer-col col-md-6 col-sm-6 about">
                         <div class="footer-col col-md-6 col-sm-6 about">
-                            <div class="footer-col-inner">
-                                <h3>Transparência</h3>
-                                <ul>
-                                    <li><a href="{% url 'transparency' %}?pagina=licitacoes" target="_blank"><i class="fa fa-caret-right"></i>Licitações</a></li>
-                                    <li><a href="{% url 'transparency' %}?pagina=receita" target="_blank"><i class="fa fa-caret-right"></i>Registro de Receitas</a></li>
-                                    <li><a href="{% url 'transparency' %}?pagina=despesa" target="_blank"><i class="fa fa-caret-right"></i>Registro de Despesas</a></li>
-                                    <li><a href="{% url 'transparency' %}?pagina=contas" target="_blank"><i class="fa fa-caret-right"></i>Prestação de Contas</a></li>
-                                    <li><a href="http://www.portaltransparencia.gov.br/convenios/ConveniosLista.asp?UF=pe&Estado=pernambuco&CodMunicipio=2545&Municipio=SALOA&CodOrgao=&Orgao=&TipoConsulta=0&Periodo=" target="_blank"><i class="fa fa-caret-right"></i>Transferências</a></li>
-                                    <li><a href="{% url 'transparency' %}?pagina=acoes" target="_blank"><i class="fa fa-caret-right"></i>Programas, Ações, Projetos e Obras</a></li>
-                                    <li><a href="{% url 'transparency' %}?pagina=servidores" target="_blank"><i class="fa fa-caret-right"></i>Servidores</a></li>
-                                    <li><a href="{% url 'transparency' %}?pagina=ppa" target="_blank"><i class="fa fa-caret-right"></i>Plano Plurianual (PPA)</a></li>
-                                    <li><a href="{% url 'transparency' %}?pagina=ldo" target="_blank"><i class="fa fa-caret-right"></i>Lei de Diretrizes Orçamentárias (LDO)</a></li>
-                                    <li><a href="{% url 'transparency' %}?pagina=loa" target="_blank"><i class="fa fa-caret-right"></i>Lei do Orçamento Anual (LOA)</a></li>
-                                    <li><a href="{% url 'transparency' %}?pagina=rreo" target="_blank"><i class="fa fa-caret-right"></i>Relatório Resumido da Execução Orçamentária (RREO)</a></li>
-                                    <li><a href="{% url 'transparency' %}?pagina=rgf" target="_blank"><i class="fa fa-caret-right"></i>Relatório de Gestão Fiscal (RGF)</a></li>
-                                    <li><a href="{% url 'transparency' %}?pagina=simplificados" target="_blank"><i class="fa fa-caret-right"></i>Simplificados</a></li>
-                                    <li><a href="{% url 'transparency' %}?pagina=auditorias" target="_blank"><i class="fa fa-caret-right"></i>Parecer Prévio</a></li>
-                                </ul>
-                            </div><!--//footer-col-inner-->
+                            {% regroup bot_list by area.name as area_list %}
+
+                            {% for area in area_list %}
+                                {% if area.list.0.area.slug == 'transparencia' %}
+                                        <div class="footer-col-inner">
+                                            <h3>{{ area.grouper }}</h3>
+                                            <ul>
+                                            {% for item in area.list %}
+                                                {% if not item.alt %}
+                                                    <li><a href="{% url 'transparency' %}?pagina={{ item.slug }}" target="_blank"><i class="fa fa-caret-right"></i>{{ item.name }}</a></li>
+                                                {% else %}
+                                                    <li><a href="{{ item.alt }}" target="_blank"><i class="fa fa-caret-right"></i>{{ item.name }}</a></li>
+                                                {% endif %}
+                                            {% endfor %}
+                                            </ul>
+                                        </div><!--//footer-col-inner-->
+                                {% endif %}
+                            {% endfor %}
                         </div><!--//foooter-col-->
                         <div class="footer-col col-md-6 col-sm-6 contact">
                             <div class="footer-col-inner">
