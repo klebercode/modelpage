@@ -131,6 +131,9 @@
                         {% regroup bot_list by area.name as area_list %}
 
                         {% for area in area_list %}
+                            {% if forloop.first %}
+                                <div class="row">
+                            {% endif %}
                             <div class="footer-col col-md-6 col-sm-6 about">
                                 <div class="footer-col-inner">
                                     <h3>{{ area.grouper }}</h3>
@@ -141,6 +144,12 @@
                                     </ul>
                                 </div><!--//footer-col-inner-->
                             </div><!--//foooter-col-->
+                            {% if forloop.counter|divisibleby:2 and not forloop.last %}
+                                </div>
+                                <div class="row">
+                            {% elif forloop.last %}
+                                </div>
+                            {% endif %}
                         {% endfor %}
                     </div>
                     <div class="footer-col col-md-6 col-sm-6 about">
