@@ -40,12 +40,9 @@
             <div class="top-bar">
                 <div class="container">
                     <ul class="social-icons col-md-6 col-sm-6 col-xs-12 hidden-xs">
-                        <!-- <li><a href="#" ><i class="fa fa-twitter"></i></a></li> -->
-                        <li><a href="#" ><i class="fa fa-facebook"></i></a></li>
-                        <!-- <li><a href="#" ><i class="fa fa-youtube"></i></a></li>
-                        <li><a href="#" ><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href="#" ><i class="fa fa-google-plus"></i></a></li>
-                        <li class="row-end"><a href="#" ><i class="fa fa-rss"></i></a></li> -->
+                        {% for object in social_list %}
+                            <li><a href="{{ object.link }}" ><i class="fa fa-{{ object.name }}"></i></a></li>
+                        {% endfor %}
                     </ul><!--//social-icons-->
                     <form class="pull-right search-form" role="search" action="/noticias/" method="get">
                         <div class="form-group">
@@ -219,14 +216,9 @@
                 <div class="row">
                     <small class="copyright col-md-6 col-sm-12 col-xs-12">Copyright @ {% now "Y" %} {{ enterprise.name }} - CNPJ: {{ enterprise.cnpj }} | Desenvolvido por <a href="http://ow7.com.br/">OW7</a></small>
                     <ul class="social pull-right col-md-6 col-sm-12 col-xs-12">
-                        <!-- <li><a href="#" ><i class="fa fa-twitter"></i></a></li> -->
-                        <li><a href="#" ><i class="fa fa-facebook"></i></a></li>
-                        <!-- <li><a href="#" ><i class="fa fa-youtube"></i></a></li>
-                        <li><a href="#" ><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href="#" ><i class="fa fa-google-plus"></i></a></li>
-                        <li><a href="#" ><i class="fa fa-pinterest"></i></a></li>
-                        <li><a href="#" ><i class="fa fa-skype"></i></a></li>
-                        <li class="row-end"><a href="#" ><i class="fa fa-rss"></i></a></li> -->
+                        {% for object in social_list %}
+                            <li><a href="{{ object.link }}" ><i class="fa fa-{{ object.name }}"></i></a></li>
+                        {% endfor %}
                     </ul><!--//social-->
                 </div><!--//row-->
             </div><!--//container-->

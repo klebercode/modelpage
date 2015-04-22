@@ -1,7 +1,7 @@
 # coding: utf-8
 from django.shortcuts import get_object_or_404
 
-from modelpage.core.models import Enterprise, Category, Area
+from modelpage.core.models import Enterprise, Category, Area, Social
 
 
 def enterprise_proc(request):
@@ -16,6 +16,7 @@ def enterprise_proc(request):
     menu_list = Category.objects.filter(area__visible=True, menu=True)
     menu_extra_list = Category.objects.filter(area__visible=True,
                                               menu_extra=True)
+    social_list = Social.objects.all()
 
     return {
         'enterprise': enterprise,
@@ -23,6 +24,7 @@ def enterprise_proc(request):
         'bot_list': bot_list,
         'menu_list': menu_list,
         'menu_extra_list': menu_extra_list,
+        'social_list': social_list,
     }
 
 
@@ -38,6 +40,7 @@ class EnterpriseExtraContext(object):
     menu_list = Category.objects.filter(area__visible=True, menu=True)
     menu_extra_list = Category.objects.filter(area__visible=True,
                                               menu_extra=True)
+    social_list = Social.objects.all()
 
     extra_context = {
         'enterprise': enterprise,
@@ -45,6 +48,7 @@ class EnterpriseExtraContext(object):
         'bot_list': bot_list,
         'menu_list': menu_list,
         'menu_extra_list': menu_extra_list,
+        'social_list': social_list,
     }
 
     def get_context_data(self, **kwargs):

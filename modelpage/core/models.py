@@ -71,6 +71,15 @@ ORGAO_CHOICES = (
     (2, _(u'Legislativo')),
 )
 
+SOCIAL_CHOICES = (
+    ('twitter', _(u'Twitter')),
+    ('facebook', _(u'Facebook')),
+    ('youtube', _(u'Youtube')),
+    ('linkedin', _(u'LinkedIn')),
+    ('google-plus', _(u'Google Plus')),
+    ('rss', _(u'RSS')),
+)
+
 
 class AreaManager(models.Manager):
     def get_queryset(self):
@@ -108,8 +117,7 @@ class Area(models.Model):
 
 
 class Social(models.Model):
-    name = models.CharField(_(u'Nome'), max_length=50,
-                            help_text='Ex: Facebook')
+    name = models.CharField(_(u'Nome'), max_length=50, choices=SOCIAL_CHOICES)
     link = models.URLField(_(u'Link'),
                            help_text='Ex: http://www.facebook.com/usuario')
 
