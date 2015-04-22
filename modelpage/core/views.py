@@ -63,7 +63,8 @@ def content(request, slug):
 
     context['content_list'] = content_list
     context['blog_list'] = Entry.published.filter(categories=category)[:6]
-    context['category_list'] = Category.objects.all().order_by('?')[:10]
+    context['category_list'] = Category.objects.filter(
+        area__home=True).order_by('?')[:10]
     context['last_video_list'] = Video.objects.all()[:4]
 
     return render(request, 'content.html', context,

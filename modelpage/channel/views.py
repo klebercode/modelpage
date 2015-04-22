@@ -35,7 +35,7 @@ class VideoDayArchiveView(DayArchiveView):
     allow_future = True
 
 
-class VideoListView(EnterpriseExtraContext,  generic.ListView):
+class VideoListView(EnterpriseExtraContext, generic.ListView):
     queryset = Video.objects.all()
     template_name = 'video/video_home.html'
     # TODO: mudar a paginacao
@@ -57,7 +57,8 @@ class VideoListView(EnterpriseExtraContext,  generic.ListView):
         context['search'] = search
         context['tag_list'] = Video.tags.most_common()
         # TODO: mudar a forma de carregamento das categorias
-        context['category_list'] = Category.objects.all().order_by('?')[:10]
+        context['category_list'] = Category.objects.filter(
+            area__home=True).order_by('?')[:10]
         context['calendar_list'] = Calendar.objects.all()[:4]
         context['blog_list'] = Entry.published.all()[:4]
         context['last_list'] = Video.objects.all().order_by('?')[:4]
@@ -75,7 +76,8 @@ class VideoDateDetailView(EnterpriseExtraContext, generic.DateDetailView):
         context = super(VideoDateDetailView, self).get_context_data(**kwargs)
         context['tag_list'] = Video.tags.most_common()
         # TODO: mudar a forma de carregamento das categorias
-        context['category_list'] = Category.objects.all().order_by('?')[:10]
+        context['category_list'] = Category.objects.filter(
+            area__home=True).order_by('?')[:10]
         context['calendar_list'] = Calendar.objects.all()[:4]
         context['blog_list'] = Entry.published.all()[:4]
         context['last_list'] = Video.objects.all()[:4]
@@ -104,7 +106,7 @@ class VideoCategoryListView(VideoListView):
         return Video.objects.filter(categories__slug=self.kwargs['cat_slug'])
 
 
-class AudioListView(EnterpriseExtraContext,  generic.ListView):
+class AudioListView(EnterpriseExtraContext, generic.ListView):
     queryset = Audio.objects.all()
     template_name = 'audio/audio_home.html'
     # TODO: mudar a paginacao
@@ -126,7 +128,8 @@ class AudioListView(EnterpriseExtraContext,  generic.ListView):
         context['search'] = search
         context['tag_list'] = Audio.tags.most_common()
         # TODO: mudar a forma de carregamento das categorias
-        context['category_list'] = Category.objects.all().order_by('?')[:10]
+        context['category_list'] = Category.objects.filter(
+            area__home=True).order_by('?')[:10]
         context['calendar_list'] = Calendar.objects.all()[:4]
         context['blog_list'] = Entry.published.all()[:4]
         context['last_list'] = Audio.objects.all().order_by('?')[:4]
@@ -144,7 +147,8 @@ class AudioDateDetailView(EnterpriseExtraContext, generic.DateDetailView):
         context = super(AudioDateDetailView, self).get_context_data(**kwargs)
         context['tag_list'] = Audio.tags.most_common()
         # TODO: mudar a forma de carregamento das categorias
-        context['category_list'] = Category.objects.all().order_by('?')[:10]
+        context['category_list'] = Category.objects.filter(
+            area__home=True).order_by('?')[:10]
         context['calendar_list'] = Calendar.objects.all()[:4]
         context['blog_list'] = Entry.published.all()[:4]
         context['last_list'] = Audio.objects.all()[:4]

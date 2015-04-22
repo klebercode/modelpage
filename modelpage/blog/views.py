@@ -34,7 +34,7 @@ class EntryDayArchiveView(DayArchiveView):
     allow_future = True
 
 
-class EntryListView(EnterpriseExtraContext,  generic.ListView):
+class EntryListView(EnterpriseExtraContext, generic.ListView):
     # model = Entry
     queryset = Entry.published.all()
     template_name = 'blog/entry_home.html'
@@ -57,7 +57,8 @@ class EntryListView(EnterpriseExtraContext,  generic.ListView):
         context['search'] = search
         context['tag_list'] = Entry.tags.most_common()
         # TODO: mudar a forma de carregamento das categorias
-        context['category_list'] = Category.objects.all().order_by('?')[:10]
+        context['category_list'] = Category.objects.filter(
+            area__home=True).order_by('?')[:10]
         context['calendar_list'] = Calendar.objects.all()[:4]
         context['other_list'] = Entry.objects.all().order_by('?')[:4]
         return context
@@ -74,7 +75,8 @@ class EntryDateDetailView(EnterpriseExtraContext, generic.DateDetailView):
         context = super(EntryDateDetailView, self).get_context_data(**kwargs)
         context['tag_list'] = Entry.tags.most_common()
         # TODO: mudar a forma de carregamento das categorias
-        context['category_list'] = Category.objects.all().order_by('?')[:10]
+        context['category_list'] = Category.objects.filter(
+            area__home=True).order_by('?')[:10]
         context['calendar_list'] = Calendar.objects.all()[:4]
         context['other_list'] = Entry.objects.all().order_by('?')[:4]
         return context
