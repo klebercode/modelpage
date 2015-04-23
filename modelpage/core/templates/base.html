@@ -68,7 +68,7 @@
                         {% for item in menu_extra_list %}
                             <li class="divider"><a href="{% url 'content' item.slug %}">{{ item.name }}</a></li>
                         {% endfor %}
-                        <li><a href="{% url 'contact' %}">Contato</a></li>
+                        <li><a href="{% url 'contact' %}">Ouvidoria</a></li>
                     </ul><!--//menu-top-->
                     <br />
                     <div class="contact pull-right">
@@ -124,7 +124,7 @@
                         </li> -->
                         <li class="{% block nav_audio %}{% endblock %}nav-item"><a href="{% url 'channel:audio' %}">Áudios</a></li>
                         <li class="{% block nav_video %}{% endblock %}nav-item"><a href="{% url 'channel:video' %}">Vídeos</a></li>
-                        <li class="{% block nav_contact %}{% endblock %}nav-item"><a href="{% url 'contact' %}">Contato</a></li>
+                        <li class="{% block nav_contact %}{% endblock %}nav-item"><a href="{% url 'contact' %}">Ouvidoria</a></li>
                     </ul><!--//nav-->
                 </div><!--//navabr-collapse-->
             </div><!--//container-->

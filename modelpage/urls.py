@@ -11,7 +11,7 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     url(r'^$', 'modelpage.core.views.home', name='home'),
-    url(r'^contato.html$', 'modelpage.core.views.contact', name='contact'),
+    url(r'^ouvidoria.html$', 'modelpage.core.views.contact', name='contact'),
 
     url(r'^transparencia/$', 'modelpage.core.views.transparency',
         name='transparency'),
