@@ -1,0 +1,55 @@
+{% load i18n staticfiles thumbnail %}
+<html>
+<head>
+    <title>{{ enterprise.name }}{% block title %}{% endblock title %}</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="OW7">
+</head>
+<style>
+    body {
+        width: 100%;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+
+<body>
+    <center>
+
+    <br><br><br>
+
+    <h2>Site aguardando conteúdo para publicação.</h2>
+
+    {% thumbnail enterprise.logo "380x80" crop="center" format="PNG" as im %}
+        <img id="logo" src="{{ im.url }}" alt="{{ enterprise.name }}/{{ enterprise.state }}">
+    {% empty %}
+        <img src="http://placehold.it/380x80/cccccc/FFFFFF" alt="{{ enterprise.name }}/{{ enterprise.state }}">
+    {% endthumbnail %}
+
+    <br><br><br>
+
+    <p>Acesse nosso portal da transparência.</p>
+
+    <a href="{% url 'transparency' %}" target="_blank">
+        {% thumbnail enterprise.logo_trans "272x101" crop="center" format="PNG" as im %}
+            <img class="img-responsive" src="{{ im.url }}">
+        {% empty %}
+            <img class="img-responsive" src="http://placehold.it/272x101/cccccc/FFFFFF">
+        {% endthumbnail %}
+    </a>
+
+    <br><br><br><br>
+
+    <p>{{ enterprise.address }}, {{ enterprise.number }}, {{ enterprise.cep }}, {{ enterprise.district }}, {{ enterprise.state }}</p>
+    <p>Fone: {{ enterprise.phone1 }}</p>
+
+    <br><br><br>
+
+    </center>
+</body>
+</html>

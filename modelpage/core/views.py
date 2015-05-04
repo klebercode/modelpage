@@ -31,6 +31,15 @@ def home(request):
                                                   ))
 
 
+def construction(request):
+    context = {}
+
+    return render(request, 'construction.html', context,
+                  context_instance=RequestContext(request,
+                                                  processors=[enterprise_proc]
+                                                  ))
+
+
 def contact(request):
     context = {}
 

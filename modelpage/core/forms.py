@@ -6,6 +6,7 @@ from decouple import config
 
 from modelpage.core.models import Enterprise
 
+
 class ContactForm(forms.Form):
     name = forms.CharField(label=u'Nome',
                            widget=forms.TextInput(
