@@ -21,11 +21,11 @@
             <div class="album-cover">
                 {% autoescape off %}
                 {{ object.embed }}
-                {% endautoescape %}
                 <div class="desc">
                     <h4><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></h4>
                     <p class="description">{{ object.body|striptags|truncatechars:170 }}</p>
                 </div>
+                {% endautoescape %}
             </div>
         </div><!--//audio-item-->
         {% empty %}
