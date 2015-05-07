@@ -46,7 +46,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_filter = ('area', 'menu', 'menu_extra', 'home')
     list_display = ('name', 'acronym', 'slug', 'area', 'menu', 'menu_extra',
                     'home')
-    search_fields = ('name', 'acronym', 'slug', 'area')
+    search_fields = ('name', 'acronym', 'slug', 'area__name')
     prepopulated_fields = {'slug': ('name',)}
 
 
@@ -69,7 +69,7 @@ class BannerAdmin(admin.ModelAdmin):
 class ContentAdmin(admin.ModelAdmin):
     list_filter = ('category',)
     list_display = ('category', 'admin_body')
-    search_fields = ('body',)
+    search_fields = ('category__name', 'body')
 
 
 class TimelineAdmin(admin.ModelAdmin):
